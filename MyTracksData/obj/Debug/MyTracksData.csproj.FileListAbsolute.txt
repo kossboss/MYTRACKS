@@ -1,0 +1,9 @@
+C:\Users\kkhlebopros\0Files\Projects\MyTracksData\MyTracksData\bin\Debug\MyTracksData.exe.config
+C:\Users\kkhlebopros\0Files\Projects\MyTracksData\MyTracksData\bin\Debug\MyTracksData.exe
+C:\Users\kkhlebopros\0Files\Projects\MyTracksData\MyTracksData\bin\Debug\MyTracksData.pdb
+C:\Users\kkhlebopros\0Files\Projects\MyTracksData\MyTracksData\obj\Debug\MyTracksData.csprojResolveAssemblyReference.cache
+C:\Users\kkhlebopros\0Files\Projects\MyTracksData\MyTracksData\obj\Debug\MyTracksData.Properties.Resources.resources
+C:\Users\kkhlebopros\0Files\Projects\MyTracksData\MyTracksData\obj\Debug\MyTracksData.csproj.GenerateResource.Cache
+C:\Users\kkhlebopros\0Files\Projects\MyTracksData\MyTracksData\obj\Debug\MyTracksData.exe
+C:\Users\kkhlebopros\0Files\Projects\MyTracksData\MyTracksData\obj\Debug\MyTracksData.pdb
+C:\Users\kkhlebopros\0Files\Projects\MyTracksData\MyTracksData\obj\Debug\MyTracksData.Form1.resources
