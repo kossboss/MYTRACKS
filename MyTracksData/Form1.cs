@@ -26,27 +26,180 @@ namespace MyTracksData
         PointPairList listAmax_andT = new PointPairList();
         PointPairList listAmin_andT = new PointPairList();
         PointPairList listAavg_andT = new PointPairList();
+        PointPairList listLat_Long = new PointPairList();
         //PointPairList listSandT = new PointPairList();
 
         List<classDataPoint> Points = new List<classDataPoint>();
+        DataTable tbl = new DataTable();
+        DataTable tblf = new DataTable();
+        string filename1 = "";
         public Form1()
         {
             InitializeComponent();
+            inittable();
             disableGmenu();
+
         }
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Main();
         }
+        private void inittable() {
+            //Data Point # (2958 Useful/2959 Total) = 08:57:59 08/28/2012, Lat: 37.2758320*, Long: -121.8517480*, Alt: 15.175 m = 49.785 ft, Spd: 5.730 m/s = 12.817 mph, Br: 235.577* --- ACC: 6 -- Delta_D: 26.204 ft, Total Distance: 30.801 mi
+            //       INFO - min_MPH: 0.000, max_MPH: 72.871, avgMPH_data: 35.121, avgMPH_map_real: 15.015, avgMPH_map_travel: 28.968, min_ALT: -220.756, max_ALT: 123.701, avg_ALT: -46.633, dTime_Travel(sec): 1.969, Travel(hr): 1.063, Real(hr): 2.051, Rest(hr): 0.988
+
+            tbl.Columns.Add("i", typeof(int));     //1
+            tbl.Columns.Add("Date & Time", typeof(DateTime)); //2
+            tbl.Columns.Add("Real Time [Hours]", typeof(double)); //real 3
+            tbl.Columns.Add("Lat [Degrees]", typeof(double)); //4
+            tbl.Columns.Add("Long [Degrees]", typeof(double));  //5
+            tbl.Columns.Add("Altitude [meters]", typeof(double));  //6
+            tbl.Columns.Add("Altitude [ft]", typeof(double));  //6.5
+            tbl.Columns.Add("Speed [m/s]", typeof(double)); //7
+            tbl.Columns.Add("Speed [mph]", typeof(double));  //8
+            tbl.Columns.Add("Bearing [Degrees]", typeof(double));  //9
+            tbl.Columns.Add("Accuracy", typeof(double)); //10
+            tbl.Columns.Add("Distance from last point [ft]", typeof(double)); //11
+            tbl.Columns.Add("Total Distance [miles]", typeof(double));  //12
+            tbl.Columns.Add("Min Speed [mph]", typeof(double));  //13
+            tbl.Columns.Add("Max Speed [mph]", typeof(double));  //14
+            tbl.Columns.Add("Average Speed from Data [mph]", typeof(double));  //15
+            tbl.Columns.Add("Average Speed based on Real Time [mph]", typeof(double)); //16
+            tbl.Columns.Add("Average Speed based on Travel Time [mph]", typeof(double));  //17
+            tbl.Columns.Add("Min Altitude [ft]", typeof(double));  //18
+            tbl.Columns.Add("Max Altitude [ft]", typeof(double));  //19
+            tbl.Columns.Add("Average Altitude [ft]", typeof(double));  //20
+            tbl.Columns.Add("Travel Time [Hours]", typeof(double));   //21
+            tbl.Columns.Add("Time at rest/stopped [Hours]", typeof(double));  //22
+            //
+
+            tblf.Columns.Add("i", typeof(int));     //1
+            tblf.Columns.Add("Date & Time", typeof(DateTime)); //2
+            tblf.Columns.Add("Real Time [Hours]", typeof(string)); //real 3
+            tblf.Columns.Add("Lat [Degrees]", typeof(double)); //4
+            tblf.Columns.Add("Long [Degrees]", typeof(double));  //5
+            tblf.Columns.Add("Altitude [meters]", typeof(string));  //6
+            tblf.Columns.Add("Altitude [ft]", typeof(string));  //6.5
+            tblf.Columns.Add("Speed [m/s]", typeof(double)); //7
+            tblf.Columns.Add("Speed [mph]", typeof(string));  //8
+            tblf.Columns.Add("Bearing [Degrees]", typeof(string));  //9
+            tblf.Columns.Add("Accuracy", typeof(double)); //10
+            tblf.Columns.Add("Distance from last point [ft]", typeof(string)); //11
+            tblf.Columns.Add("Total Distance [miles]", typeof(string));  //12
+            tblf.Columns.Add("Min Speed [mph]", typeof(string));  //13
+            tblf.Columns.Add("Max Speed [mph]", typeof(string));  //14
+            tblf.Columns.Add("Average Speed from Data [mph]", typeof(string));  //15
+            tblf.Columns.Add("Average Speed based on Real Time [mph]", typeof(string)); //16
+            tblf.Columns.Add("Average Speed based on Travel Time [mph]", typeof(string));  //17
+            tblf.Columns.Add("Min Altitude [ft]", typeof(string));  //18
+            tblf.Columns.Add("Max Altitude [ft]", typeof(string));  //19
+            tblf.Columns.Add("Average Altitude [ft]", typeof(string));  //20
+            tblf.Columns.Add("Travel Time [Hours]", typeof(string));   //21
+            tblf.Columns.Add("Time at rest/stopped [Hours]", typeof(string));  //22
+
+          
+
+        }
+
+
+
+        private void showtable()
+        {
+           
+            table tb = new table();
+            tb.Show();
+            tb.Text = "Table - Not Formatted";
+            tb.dg.DataSource = tbl;
+         //   tb.dg.
+         //   tb.dg.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+       //     tb.dg.AutoResizeRows(DataGridViewAutoSizeRowsMode.AllCells);  
+         }
+
+        private void showtablef()
+        {
+
+            table tb = new table();
+            tb.Show();
+            tb.Text = "Table - Formatted";
+            tb.dg.DataSource = tblf;
+            //   tb.dg.
+          //  tb.dg.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            //     tb.dg.AutoResizeRows(DataGridViewAutoSizeRowsMode.AllCells);  
+        }
+
+
+
+        private void saveXML(DataTable table_to_save, bool isthisformatted)
+        {
+           
+            FileInfo probe = new FileInfo(filename1);
+            string filename_xmlout = "";
+            string extra = ": NOT Formatted";
+            string extra1 = "(NOT FORMATTED)";
+            double factor = 21.8778; //got factors from simple calc
+            if (isthisformatted) 
+            {
+                extra1 = "(FORMATTED)";
+                extra = ": Formatted";
+                factor=20.647;
+            }
+            double sizeguess=0;
+            double actualsize=0;
+            sizeguess = (((Convert.ToDouble(probe.Length) * factor) / 1024) / 1024);
+            SaveFileDialog fsave = new SaveFileDialog();
+            fsave.Title = String.Format("Output XML File"+ extra + " - Approx File Size: ~{0:0.0} MB", sizeguess)  ;
+            fsave.DefaultExt = ".xml";
+            fsave.Filter = "XML (.xml)|*.xml|All Files (*.*)|*.*";
+            fsave.FilterIndex = 1;
+//            fsave.Filter = fsave.DefaultExt;
+           
+            if (fsave.ShowDialog() == DialogResult.OK)
+            {
+
+                filename_xmlout = fsave.FileName;
+
+                if (filename_xmlout.ToLower().Equals(filename1.ToLower())) 
+                {
+                    rtb.AppendText("* Error Saving XML: Cant overwrite Original CSV File" + Environment.NewLine); rtb.Refresh();
+                    return;
+                }
+                if (filename_xmlout.Equals(""))
+                {
+                    rtb.AppendText("* Error Saving XML: EMPTY FILE" + Environment.NewLine); rtb.Refresh();
+                  return;
+                }
+
+
+                DataSet set = new DataSet(filename1 + " MoreTracks by Kossboss");
+                set.Tables.Add(table_to_save);
+                set.WriteXml(filename_xmlout, XmlWriteMode.DiffGram);
+                probe = new FileInfo(filename_xmlout);
+                actualsize = (Convert.ToDouble(probe.Length)/1024)/1024;
+                rtb.AppendText( String.Format("* Saved Table to XML " +extra1+" - Size: {0:0.000} MB, File Name: {1}", actualsize, filename_xmlout)+ Environment.NewLine); rtb.Refresh();
+            }
+            else
+            {
+                return;
+            }
+
+
+
+
+        }
+
+
         private void Main()
         {
             
             OpenFileDialog fopen = new OpenFileDialog();
             fopen.Multiselect = false;
+            fopen.Filter = "CSV (.csv)|*.csv|All Files (*.*)|*.*";
+            fopen.FilterIndex = 1;
             if (fopen.ShowDialog() == DialogResult.OK)
             {
               
                 ReadFile(fopen.FileName);
+               
             }
             else
             {
@@ -55,6 +208,7 @@ namespace MyTracksData
         }
         private void ReadFile(string filename)
         {
+            filename1 = filename;
             disableGmenu();
             rtb.AppendText("#######################" + Environment.NewLine); rtb.Refresh();
             rtb.AppendText("* Started Read File: " + filename + Environment.NewLine); rtb.Refresh();
@@ -193,6 +347,7 @@ namespace MyTracksData
             double mph_old = 0;
             RichTextBox rtf = new RichTextBox();
             // FOR BOLD BUT WAS SLOW -->  int before = 0; int after = 0; int lengthh = 0; string str_bold = ""; string str_notbold = "";
+            double REAL_HOURS = 0;
             for (int i = 0; i < splitlen; i++) // START FOR LOOP I
             {
                 lat1R = 0;
@@ -300,6 +455,7 @@ namespace MyTracksData
                     // first t
                     t2 = new DateTime(year1, month1, day1, hour1, minute1, second1, DateTimeKind.Unspecified);
                     total_time_hr = new TimeSpan(t2.Ticks - t1.Ticks);
+                    REAL_HOURS = total_time_hr.TotalHours;
                     rest_hours = total_time_hr.TotalHours - total_travel_hr;
                     if (mph > maxMPH) { maxMPH = mph; }
                     if (altft > maxALTft) { maxALTft = altft; }
@@ -309,7 +465,7 @@ namespace MyTracksData
                     avgMPH_data = sumMPH_data / iter_good;
                     sumALTft += altft;
                     avgALTft = sumALTft / iter_good;
-                    avgMPH_map_real = total_d / total_time_hr.TotalHours; // take into account stops and stuff
+                    avgMPH_map_real = total_d / REAL_HOURS; // take into account stops and stuff
                     avgMPH_map_travel = total_d / total_travel_hr;  // just when moving avg is calc
                     //d=rt  so t=d/r
                     //END OF ANALYSIS STUFF
@@ -317,20 +473,50 @@ namespace MyTracksData
                     // need to bold the next line
                     resstr = String.Format(" Data Point # ({0} Useful/{1} Total) = {2:00}:{3:00}:{4:00} {5:00}/{6:00}/{7:00}, Lat: {8:0.0000000}*, Long: {9:0.0000000}*, Alt: {10:0,0.000} m = {17:0.000} ft, Spd: {11:0.000} m/s = {16:0.000} mph, Br: {12:0.000}* --- ACC: {13} -- Delta_D: {14:0.000} ft, Total Distance: {15:0.000} mi", iter_good, i + 1, hour1, minute1, second1, month1, day1, year1, Convert.ToDouble(slat), Convert.ToDouble(slong), Convert.ToDouble(salt), Convert.ToDouble(sspeed), Convert.ToDouble(sbear), sacc, delta_d_ft, total_d, mph, altft);
                     resstr += Environment.NewLine;
-                    resstr += String.Format("                   INFO - min_MPH: {0:0.000}, max_MPH: {1:0.000}, avgMPH_data: {2:0.000}, avgMPH_map_real: {9:0.000}, avgMPH_map_travel: {10:0.000}, min_ALT: {3:0,0.000}, max_ALT: {4:0,0.000}, avg_ALT: {5:0,0.000}, dTime_Travel(sec): {6:0.000}, Travel(hr): {7:0.000}, Real(hr): {8:0.000}, Rest(hr): {11:0.000}", minMPH, maxMPH, avgMPH_data, minALTft, maxALTft, avgALTft, (dTimeHigh + dTimeLow / 2) * 3600, total_travel_hr, total_time_hr.TotalHours, avgMPH_map_real, avgMPH_map_travel, rest_hours);
+                    resstr += String.Format("                   INFO - min_MPH: {0:0.000}, max_MPH: {1:0.000}, avgMPH_data: {2:0.000}, avgMPH_map_real: {9:0.000}, avgMPH_map_travel: {10:0.000}, min_ALT: {3:0,0.000}, max_ALT: {4:0,0.000}, avg_ALT: {5:0,0.000}, dTime_Travel(sec): {6:0.000}, Travel(hr): {7:0.000}, Real(hr): {8:0.000}, Rest(hr): {11:0.000}", minMPH, maxMPH, avgMPH_data, minALTft, maxALTft, avgALTft, (dTimeHigh + dTimeLow / 2) * 3600, total_travel_hr, REAL_HOURS, avgMPH_map_real, avgMPH_map_travel, rest_hours);
                     res.Append(resstr + Environment.NewLine);
-                    listSandT.Add(total_time_hr.TotalHours , mph );
-                    listDandT.Add(total_time_hr.TotalHours, total_d);
-                    listAandT.Add(total_time_hr.TotalHours, altft); 
+                    // fill up graph points
+                    listSandT.Add(REAL_HOURS , mph );
+                    listDandT.Add(REAL_HOURS, total_d);
+                    listAandT.Add(REAL_HOURS, altft); 
                     //speed
-                    listSmax_andT.Add(total_time_hr.TotalHours, maxMPH);
-                    listSmin_andT.Add(total_time_hr.TotalHours, minMPH);
-                    listSavg_andT.Add(total_time_hr.TotalHours, avgMPH_map_real); 
+                    listSmax_andT.Add(REAL_HOURS, maxMPH);
+                    listSmin_andT.Add(REAL_HOURS, minMPH);
+                    listSavg_andT.Add(REAL_HOURS, avgMPH_map_real); 
                     //altitude
-                    listAmax_andT.Add(total_time_hr.TotalHours, maxALTft);
-                    listAmin_andT.Add(total_time_hr.TotalHours, minALTft);
-                    listAavg_andT.Add(total_time_hr.TotalHours, avgALTft);
+                    listAmax_andT.Add(REAL_HOURS, maxALTft);
+                    listAmin_andT.Add(REAL_HOURS, minALTft);
+                    listAavg_andT.Add(REAL_HOURS, avgALTft);
+                    listLat_Long.Add(Convert.ToDouble(slong), Convert.ToDouble(slat));
+                    // fill up data table
+                    tbl.Rows.Add(iter_good, t2, REAL_HOURS,Convert.ToDouble(slat),Convert.ToDouble(slong), Convert.ToDouble(salt),altft,Convert.ToDouble(sspeed), mph,Convert.ToDouble(sbear),Convert.ToDouble(sacc),delta_d_ft, total_d, minMPH, maxMPH, avgMPH_data,avgMPH_map_real,avgMPH_map_travel,minALTft,maxALTft,avgALTft,total_travel_hr,rest_hours);
+                    tblf.Rows.Add(iter_good, t2, f1(REAL_HOURS), Convert.ToDouble(slat), Convert.ToDouble(slong), f1(Convert.ToDouble(salt)), f1(altft), Convert.ToDouble(sspeed), f1(mph), f1(Convert.ToDouble(sbear)), Convert.ToDouble(sacc), f1(delta_d_ft), f1(total_d), f1(minMPH), f1(maxMPH), f1(avgMPH_data), f1(avgMPH_map_real), f1(avgMPH_map_travel), f1(minALTft),f1( maxALTft), f1(avgALTft), f1(total_travel_hr), f1(rest_hours));
+                    
+                    //           tbl.Columns.Add("i", typeof(int));     //1
 
+                    //tbl.Columns.Add("Date & Time", typeof(DateTime)); //2
+                    //tbl.Columns.Add("Real Time [Hours]", typeof(DateTime)); //real 3
+                    //tbl.Columns.Add("Lat [Degrees]", typeof(double)); //4
+                    //tbl.Columns.Add("Long [Degrees]", typeof(double));  //5
+                    //tbl.Columns.Add("Altitude [meters]", typeof(double));  //6
+                    //tbl.Columns.Add("Altitude [ft]", typeof(double));  //6.5
+                    //tbl.Columns.Add("Speed [m/s]", typeof(double)); //7
+                    //tbl.Columns.Add("Speed [mps]", typeof(double));  //8
+                    //tbl.Columns.Add("Bearing [Degrees]", typeof(double));  //9
+                    //tbl.Columns.Add("Accuracy", typeof(double)); //10
+                    //tbl.Columns.Add("Distance from last point [ft]", typeof(double)); //11
+                    //tbl.Columns.Add("Total Distance", typeof(double));  //12
+                    //tbl.Columns.Add("Min Speed [mph]", typeof(double));  //13
+                    //tbl.Columns.Add("Max Speed [mph]", typeof(double));  //14
+                    //tbl.Columns.Add("Average Speed from Data [mph]", typeof(double));  //15
+                    //tbl.Columns.Add("Average Speed based on Real Time [mph]", typeof(double)); //16
+                    //tbl.Columns.Add("Average Speed based on Travel Time [mph]", typeof(double));  //17
+                    //tbl.Columns.Add("Min Altitude [ft]", typeof(double));  //18
+                    //tbl.Columns.Add("Max Altitude [ft]", typeof(double));  //19
+                    //tbl.Columns.Add("Average Altitude [ft]", typeof(double));  //20
+                    //tbl.Columns.Add("Travel Time [Hours]", typeof(double));   //21
+                    //tbl.Columns.Add("Time at rest/stopped [Hours]", typeof(double));  //22
+                  
 
                 }
             } // END I LOOP
@@ -355,6 +541,11 @@ namespace MyTracksData
             rtb.AppendText("#######################" + Environment.NewLine); rtb.Refresh();
             sw.Reset();
         }
+        public string f1(double inputdouble)
+        {
+            return String.Format("{0:0.0000}",inputdouble);
+            
+        }
         private void exitToolStripMenuItem_Click(object sender, EventArgs e) { this.Close(); }
         private void Form1_Load(object sender, EventArgs e) { }
         private void cwl(string str) { Console.WriteLine(str); }
@@ -363,13 +554,17 @@ namespace MyTracksData
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e) { }
         private void disableGmenu() {
             graphToolStripMenuItem.Enabled = false;
+            tableToolStripMenuItem.Enabled = false;
             listDandT.Clear();
             listSandT.Clear();
             listAandT.Clear();
+            tbl.Rows.Clear();
+            tblf.Rows.Clear();
         }
         private void enableGmenu()
         {
             graphToolStripMenuItem.Enabled = true;
+            tableToolStripMenuItem.Enabled = true;
         }
 
         private void speedAndTimeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -380,6 +575,7 @@ namespace MyTracksData
         {
             graphstuff(listDandT, "Distance Vs. Total(Real) Time", "Time [Hours]", "Distance [miles]");
         }
+
         private void altitudeAndTimeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             graph4stuff(listAandT, listAmax_andT, listAmin_andT, listAavg_andT, "Altitude Vs. Total(Real) Time", "Time [Hours]", "Altitude [ft]");
@@ -389,22 +585,23 @@ namespace MyTracksData
         {
             graph g = new graph();
             g.Show();
-
             GraphPane myPane = g.zgc.GraphPane;
             myPane.Title.Text = Title;
             myPane.XAxis.Title.Text = x_title;
             myPane.YAxis.Title.Text = y_title;
             LineItem myCurve = myPane.AddCurve(y_title, points, Color.Blue, SymbolType.Default);
-
-           // myCurve.Line.Fill = new Fill(Color.White, Color.Red, 45F);
+            // myCurve.Line.Fill = new Fill(Color.White, Color.Red, 45F);
             myCurve.Symbol.Size = 2;
-
-
-           myCurve.Symbol.Fill = new Fill(Color.Red);
-
+            myCurve.Symbol.Fill = new Fill(Color.Red);
             myPane.Chart.Fill = new Fill(Color.White, Color.LightGoldenrodYellow, 45F);
-
             myPane.Fill = new Fill(Color.White, Color.FromArgb(220, 220, 255), 45F);
+            myPane.YAxis.MajorGrid.IsVisible = true;
+
+            myPane.YAxis.MinorGrid.IsVisible = true;
+
+            myPane.XAxis.MajorGrid.IsVisible = true;
+
+            myPane.XAxis.MinorGrid.IsVisible = true;
 
             g.zgc.AxisChange();
          }
@@ -434,10 +631,19 @@ namespace MyTracksData
             LineItem myCurve3 = myPane.AddCurve(y_title +" Avg", points3_avg, Color.Orange, SymbolType.Default);
             myCurve3.Symbol.Size = 2;
             myCurve3.Symbol.Fill = new Fill(Color.Orange);
-
+            //myPane.Xaxis.MajorGrid.Default.IsVisible = true;
+            
+        
             myPane.Chart.Fill = new Fill(Color.White, Color.LightSteelBlue, 35F);
+            //myPane.
             myPane.Fill = new Fill(Color.White, Color.LightGray, 45F);
+            myPane.YAxis.MajorGrid.IsVisible = true;
 
+            myPane.YAxis.MinorGrid.IsVisible = true;
+
+            myPane.XAxis.MajorGrid.IsVisible = true;
+
+            myPane.XAxis.MinorGrid.IsVisible = true;
             g.zgc.AxisChange();
         }
         public void graphitall()
@@ -497,13 +703,49 @@ namespace MyTracksData
             // pane finalization
             myPane.Chart.Fill = new Fill(Color.LightGray, Color.SteelBlue, 45F);
             myPane.Fill = new Fill(Color.White, Color.LightGray, 25F);
+            myPane.YAxis.MajorGrid.IsVisible = true;
 
+            myPane.YAxis.MinorGrid.IsVisible = true;
+
+            myPane.XAxis.MajorGrid.IsVisible = true;
+
+            myPane.XAxis.MinorGrid.IsVisible = true;
             g.zgc.AxisChange();
         }
 
         private void graphAllExperimentalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             graphitall();
+        }
+
+        private void tableToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+         
+        }
+
+        private void showTableToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            showtable();
+        }
+
+        private void saveXMLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveXML(tbl, false);
+        }
+
+        private void showTableToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            showtablef();
+        }
+
+        private void saveXMLFormattedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveXML(tblf, true);
+        }
+
+        private void latAndLongToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            graphstuff(listLat_Long, "Map", "Longitude", "Latitude");
         }
 
     }

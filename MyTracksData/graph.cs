@@ -32,8 +32,8 @@ namespace MyTracksData
           reS();
         }
         public void   reS(){
-            zgc.Location = new Point(5,5);
-            zgc.Size = new Size(this.ClientRectangle.Width - 10, this.ClientRectangle.Height - 10); 
+            zgc.Location = new Point(2,2);
+            zgc.Size = new Size(this.ClientRectangle.Width - 10, this.ClientRectangle.Height - 4); 
         }
 
          }

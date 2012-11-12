@@ -22,3 +22,17 @@ C:\Users\kkhlebopros\0Files\Projects\MyTracksData-v1.2\MyTracksData\bin\Debug\My
 C:\Users\kkhlebopros\0Files\Projects\MyTracksData-v1.2\MyTracksData\bin\Debug\MyTracksData.pdb
 C:\Users\kkhlebopros\0Files\Projects\MyTracksData-v1.2\MyTracksData\bin\Debug\ZedGraph.dll
 C:\Users\kkhlebopros\0Files\Projects\MyTracksData-v1.2\MyTracksData\bin\Debug\ZedGraph.Web.dll
+C:\Users\kkhlebopros\0Files\Projects\MyTracksData-v1.2\MyTracksData\obj\Debug\MyTracksData.table.resources
+C:\Users\kkhlebopros\0Files\Projects\MyTracksData-v1.3\MyTracksData\bin\Debug\MyTracksData.exe.config
+C:\Users\kkhlebopros\0Files\Projects\MyTracksData-v1.3\MyTracksData\obj\Debug\MyTracksData.exe
+C:\Users\kkhlebopros\0Files\Projects\MyTracksData-v1.3\MyTracksData\obj\Debug\MyTracksData.pdb
+C:\Users\kkhlebopros\0Files\Projects\MyTracksData-v1.3\MyTracksData\bin\Debug\MyTracksData.exe
+C:\Users\kkhlebopros\0Files\Projects\MyTracksData-v1.3\MyTracksData\bin\Debug\MyTracksData.pdb
+C:\Users\kkhlebopros\0Files\Projects\MyTracksData-v1.3\MyTracksData\bin\Debug\ZedGraph.dll
+C:\Users\kkhlebopros\0Files\Projects\MyTracksData-v1.3\MyTracksData\bin\Debug\ZedGraph.Web.dll
+C:\Users\kkhlebopros\0Files\Projects\MyTracksData-v1.3\MyTracksData\obj\Debug\MyTracksData.csprojResolveAssemblyReference.cache
+C:\Users\kkhlebopros\0Files\Projects\MyTracksData-v1.3\MyTracksData\obj\Debug\MyTracksData.Form1.resources
+C:\Users\kkhlebopros\0Files\Projects\MyTracksData-v1.3\MyTracksData\obj\Debug\MyTracksData.graph.resources
+C:\Users\kkhlebopros\0Files\Projects\MyTracksData-v1.3\MyTracksData\obj\Debug\MyTracksData.Properties.Resources.resources
+C:\Users\kkhlebopros\0Files\Projects\MyTracksData-v1.3\MyTracksData\obj\Debug\MyTracksData.table.resources
+C:\Users\kkhlebopros\0Files\Projects\MyTracksData-v1.3\MyTracksData\obj\Debug\MyTracksData.csproj.GenerateResource.Cache
